@@ -31,6 +31,9 @@ class Serie:
     def checkpath(self):
         if not os.path.exists(self.path+"\\"+self.titleOfTheSeries):
             os.makedirs(self.path+"\\"+self.titleOfTheSeries)
+        if not os.path.exists(self.path+"\\"+self.titleOfTheSeries+"\\information.txt"):
+            with open(self.path+"\\"+self.titleOfTheSeries+"\\information.txt", 'w') as datei:
+                datei.write(self.url)
         self.path = self.path+"\\"+self.titleOfTheSeries
 
 

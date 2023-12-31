@@ -51,7 +51,17 @@ class Episode:
     def get_titelofEpisode(self):
         h2_tags = self.htmlsoup.find_all('h2')
         for h2_tag in h2_tags:
-            return h2_tag.text
+            return (self.correctString(h2_tag.text)).strip()
+    
+    def correctString(self, string):
+        ersetzte_string = ""
+        ersetzungszeichen = "/\\:*?\"<>|"
+        for char in string:
+            if char in ersetzungszeichen:
+                ersetzte_string += ' '
+            else:
+                ersetzte_string += char
+        return ersetzte_string
 
 
 
@@ -76,6 +86,7 @@ class Episode:
             if os.path.exists(self.finalFilename):
                 return False
         print("DOWNLOAD: "+self.filename+" "+self.episodenNummer)
+        print(self.finalFilename)
         return True
     
 

@@ -34,7 +34,7 @@ class Controll:
         
         spanObjects = htmlsoup.find_all('h1')
         for h1 in spanObjects:
-            self.titleofserie = h1.text
+            self.titleofserie = (self.correctString(h1.text)).strip()
             break
 
         stream_element = htmlsoup.find(id='stream')
@@ -60,6 +60,16 @@ class Controll:
         except Exception as e:
             print(f'Ein Fehler ist aufgetreten: {e}')
             return False
+    
+    def correctString(self, string):
+        ersetzte_string = ""
+        ersetzungszeichen = "/\\:*?\"<>|"
+        for char in string:
+            if char in ersetzungszeichen:
+                ersetzte_string += ' '
+            else:
+                ersetzte_string += char
+        return ersetzte_string
 
 
 
@@ -100,7 +110,7 @@ class Controll:
             print(len(filenames))
 
             if len(filenames) > len(list_of_episodehulle):
-                with open(os.path.dirname(self.kontrollpfad)+"Doppelte Folgen.txt","a+") as datei:
+                with open(os.path.dirname(self.kontrollpfad)+"\\"+"Doppelte Folgen.txt","a+") as datei:
                     datei.write(self.url+"\n")
                     print("Doppelte folge")
                     self.breakup = True
